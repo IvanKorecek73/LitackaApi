@@ -1,0 +1,48 @@
+﻿@page
+@model LitackaApi.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Správa uživatelů";
+}
+
+<h1>Správa uživatelů</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    @string.Join(", ", user.Roles)
+                </td>
+                <td>
+                    @if (user.Roles.Contains(LitackaApi.Auth.Roles.NewUser))
+                    {
+                        <form method="post" asp-page-handler="Approve" style="display:inline">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button class="btn btn-sm btn-success">
+                                Schválit
+                            </button>
+                        </form>
+                    }
+
+                    <form method="post" asp-page-handler="Delete"
+                          style="display:inline"
+                          onsubmit="return confirm('Opravdu smazat uživatele?');">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <button class="btn btn-sm btn-danger">
+                            Smazat
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

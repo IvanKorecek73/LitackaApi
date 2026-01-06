@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../LitackaApi.Tests/LitackaApi.Tests.csproj" Id="c1e6ae9f-b3f5-4455-8481-95da23f4d1e0" />
+  <Project Path="LitackaApi.csproj" />
+</Solution>

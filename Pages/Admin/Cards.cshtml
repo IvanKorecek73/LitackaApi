@@ -1,0 +1,102 @@
+﻿@page
+@model LitackaApi.Pages.Admin.CardsModel
+@{
+    ViewData["Title"] = "Karty uživatelů";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-3">Karty uživatelů</h1>
+
+    @if (TempData["Message"] is string msg)
+    {
+        <div class="alert alert-success">@msg</div>
+    }
+    @if (TempData["Error"] is string err)
+    {
+        <div class="alert alert-danger">@err</div>
+    }
+
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Uživatel</th>
+                <th>Číslo karty</th>
+                <th>Expirace</th>
+                <th>Stav</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var row in Model.Rows)
+            {
+                if (!row.HasCard)
+                {
+                    <!-- ŘÁDEK BEZ KARTY -->
+                    <tr>
+                        <td>
+                            <strong>@row.Email</strong><br />
+                            <span class="text-muted small">@row.UserId</span>
+                        </td>
+                        <td class="text-muted">—</td>
+                        <td class="text-muted">—</td>
+                        <td class="text-muted">Karta neexistuje</td>
+                        <td>
+                            <form method="post" asp-page-handler="Create">
+                                <input type="hidden" name="userId" value="@row.UserId" />
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Založit kartu
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <!-- ŘÁDEK S KARTOU = CELÝ ŘÁDEK JE FORM -->
+                    <form method="post" asp-page-handler="Save">
+                        <input type="hidden" name="input.UserId" value="@row.UserId" />
+
+                    <tr>
+                        <td>
+                            <strong>@row.Email</strong><br />
+                            <span class="text-muted small">@row.UserId</span>
+                        </td>
+                        <td>
+                            <span class="text-muted small">@row.CardId</span>
+                        </td>
+
+                        <td>
+                            <input type="date"
+                                   class="form-control form-control-sm"
+                                   name="input.ExpirationDate"
+                                   value="@row.ExpirationDate!.Value.ToString("yyyy-MM-dd")" />
+                        </td>
+
+                        <td>
+                            <select class="form-select form-select-sm"
+                                    name="input.StatusId">
+                                @foreach (var s in Model.Statuses)
+                                {
+                                    <option value="@s.Id"
+                                            selected="@(row.StatusId == s.Id)">
+                                        @s.Name
+                                    </option>
+                                }
+                            </select>
+                        </td>
+
+                        <td>
+                            <button type="submit"
+                                    class="btn btn-sm btn-success">
+                                Uložit
+                            </button>
+                        </td>
+                    </tr>
+                    </form>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>

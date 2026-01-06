@@ -1,0 +1,29 @@
+﻿@baseUrl = https://localhost:7087
+@email = superadmin@litacka.com
+@password = z6m#SJW^=nusM1XW
+@cardId = 1
+
+
+# login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "rememberMe": true
+}
+
+###
+# logout
+POST {{baseUrl}}/api/auth/logout
+
+###
+# GET /cards/{id}/validity  (text/plain)
+GET {{baseUrl}}/cards/{{cardId}}/validity
+Accept: text/plain
+
+###
+# GET /cards/{id}/state  (text/plain)
+GET {{baseUrl}}/cards/{{cardId}}/state
+Accept: text/plain

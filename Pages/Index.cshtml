@@ -1,0 +1,53 @@
+﻿@page
+@model LitackaApi.Pages.IndexModel
+@{
+    ViewData["Title"] = "Vaše lítačka";
+}
+
+<div class="container mt-5">
+
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="display-5 fw-bold mb-4">
+                Vaše lítačka
+            </h1>
+
+            @if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                <p class="text-muted">
+                    Pro zobrazení informací o kartě se prosím přihlaste.
+                </p>
+            }
+            else if (Model.Card is null)
+            {
+                <p>
+                    K Vašemu účtu není přiřazena žádná karta.
+                </p>
+            }
+            else
+            {
+                <p>
+                    <strong>Id vaší karty:</strong><br />
+                    @Model.Card.Status.Id
+                </p>
+
+                <p>
+                    <strong>Stav vaší karty:</strong><br />
+                    @Model.Card.Status.Name
+                </p>
+
+                <p>
+                    <strong>Datum expirace:</strong><br />
+                    @Model.Card.ExpirationDate.ToString("dd.MM.yyyy")
+                </p>
+            }
+        </div>
+
+        <div class="col-md-6 text-center">
+            <img src="~/images/hero.png"
+                 class="img-fluid rounded shadow"
+                 alt="Ilustrační obrázek lítačky" />
+        </div>
+    </div>
+
+</div>
