@@ -154,7 +154,7 @@ Funkcionalita:
 GET /health
 
 - vrací "Healthy" pokud aplikace běží
-- vytvořena standardním postupem pro tento typ EP konfigurací Project.cs
+- vytvořena standardním postupem pro tento typ EP konfigurací v Project.cs
 
 ### Platnost karty
 
@@ -175,7 +175,7 @@ GET /cards/{cardId}/state
 
 - response je prostý text
     
-- hodnota odpovídá CardStatuses.Name
+- hodnota odpovídá výčtu ze zadání a db hodnotě uložené v CardStatuses.Name
     
 
 ---
