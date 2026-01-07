@@ -1,5 +1,7 @@
 ## Litacka - popis projektu
 
+**_(Stručný popis projektu + způsoby testování a motivace jsou po spuštění aplikace přístupné zde: /ProjectDescription (Nebo z menu Popis projektu))_**
+
 Tento projekt je Proof of Concept (PoC) aplikace postavená na ASP.NET Core (nejnovější .NET), která demonstruje:
 
 - autentizaci a autorizaci pomocí ASP.NET Core Identity (cookies)
