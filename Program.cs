@@ -62,10 +62,9 @@ app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();      // /openapi/v1.json
-    app.MapScalarApiReference(); // /scalar
-}
+
+app.MapOpenApi();      // /openapi/v1.json
+app.MapScalarApiReference(); // /scalar
+
 
 app.Run();
