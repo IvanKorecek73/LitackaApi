@@ -1,3 +1,5 @@
+## Litacka - popis projektu
+
 Tento projekt je Proof of Concept (PoC) aplikace postavená na ASP.NET Core (nejnovější .NET), která demonstruje:
 
 - autentizaci a autorizaci pomocí ASP.NET Core Identity (cookies)
@@ -147,6 +149,12 @@ Funkcionalita:
 ---
 
 ## API endpointy
+
+### Health
+GET /health
+
+- vrací "Healthy" pokud aplikace běží
+- vytvořena standardním postupem pro tento typ EP konfigurací Project.cs
 
 ### Platnost karty
 
