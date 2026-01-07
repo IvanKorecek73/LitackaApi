@@ -29,7 +29,6 @@ public class AuthController : ControllerBase
 
         var email = req.Email.Trim().ToLowerInvariant();
 
-        // volitelně: nejdřív ověřit, že user existuje (kvůli jednotné odpovědi)
         var user = await _userManager.FindByEmailAsync(email);
         if (user is null)
             return Unauthorized();
@@ -43,7 +42,6 @@ public class AuthController : ControllerBase
         if (!result.Succeeded)
             return Unauthorized();
 
-        // cookie se nastaví automaticky do response headers (Set-Cookie)
         return Ok(new { message = "Přihlášeno" });
     }
 

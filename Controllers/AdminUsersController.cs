@@ -55,13 +55,11 @@ public class AdminUsersController : ControllerBase
             return NotFound();
         }
 
-        // bezpečnostní pojistka: super-admin roli neměnit běžným adminem (volitelně)
         if (await _users.IsInRoleAsync(user, Roles.SuperAdmin))
         {
             return BadRequest("Nelze měnit super-admina.");
         }
 
-        // vyčistit role a dát jednu cílovou (nebo si to uprav na multi-role)
         var current = await _users.GetRolesAsync(user);
         await _users.RemoveFromRolesAsync(user, current);
         await _users.AddToRoleAsync(user, req.Role);

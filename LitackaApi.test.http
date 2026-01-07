@@ -1,7 +1,7 @@
 ﻿@baseUrl = https://localhost:7087
 @email = superadmin@litacka.com
 @password = z6m#SJW^=nusM1XW
-@cardId = 1
+@cardId = 88
 
 
 # login

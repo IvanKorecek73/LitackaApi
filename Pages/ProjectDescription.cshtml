@@ -1,0 +1,120 @@
+﻿@page
+@model LitackaApi.Pages.ProjectDescriptionModel
+@{
+    ViewData["Title"] = "Popis projektu";
+}
+
+<h2>Popis implementace projektu</h2>
+
+<p>
+    Vše, až na <strong>Common</strong>, <strong>Controllers</strong> a <strong>Services</strong> je víceméně vygenerováno automaticky z wizardu při založení projektu ve VS 2026
+    (Asp.Net Core Api (with Razor) + Individual accounts) - tj. autorizace a autentifikace je řešena standardně a je předpřipravena v .Net Core
+</p>
+
+<ul>
+    <li>Úpravy byly dále samozřejmě v <code>Program.cs</code> - kde byl i nakonfigurován EP <code>/health</code> ze zadání</li>
+    <li>
+        Upravené stránky Home a administrační stránky (a tato stránka) byly přidány pro pohodlnější práci a nebyly součástí zadání, proto je také nepovažuji za součást cvičení.
+        (Předpřipravené automaticky vygenerované stránky pro administraci jsem upravoval jen výjimečně pro správu uživatelů)
+    </li>
+</ul>
+
+<p>
+    <img src="~/images/Pasted image 20260107101831.png" alt="Pasted image 20260107101831" />
+</p>
+
+<p>
+    Za součást odevzdané práce lze tedy brát pouze kód ve vyznačených složkách (+ v <code>Program.cs</code>), dále pak <code>LitackaApi.test.http</code> - kde je možné funkčnost otestovat.
+</p>
+
+<h2>Testování funkčnosti</h2>
+
+<p>Po přihlášení pod administrátorským účtem je možné přejít na přehled karet:</p>
+
+<p>
+    <img src="~/images/Pasted image 20260107102936.png" alt="Pasted image 20260107102936" />
+</p>
+
+<p>
+    Zde se dají upravovat hodnoty (Expirace a Stav - nutno vždy pro každý řádek zvlášť "Uložit").
+</p>
+
+<p>(Uživatelé se dají přidat přes registraci nového uživatele).</p>
+
+<h3>EP health</h3>
+
+<p>
+    Tento endpoint byl vytvořen standardním zabudovaným mechanismem - konfigurací v <code>Program.cs</code><br />
+    <code>/health</code>
+</p>
+
+<h3>Ostatní EP</h3>
+
+<p>
+    Dokumentace API může být zobrazena zde - je automaticky vygenerovaná pomocí standardních nástrojů poskytovaných .NETem + nástrojem "scalar",
+    který nahrazuje "swagger" - v dokumentaci jsou i "nezajímavé" EP týkající se autorizace atp.
+</p>
+
+<p>
+    <img src="~/images/Pasted image 20260107103904.png" alt="Pasted image 20260107103904" />
+</p>
+
+<p>"Zajímavá" je pouze část Cards popř. Auth (která řeší přihlášení pro testování):</p>
+
+<p>
+    <img src="~/images/Pasted image 20260107103818.png" alt="Pasted image 20260107103818" />
+</p>
+
+<h3>Testování</h3>
+
+<p>
+    Testovat lze samozřejmě libovolnými nástroji pro testování API. Z VS (při běhu aplikace) je též možné použít soubor
+    <code>LitackaApi.test.http</code>
+</p>
+
+<p>
+    <img src="~/images/Pasted image 20260107104157.png" alt="Pasted image 20260107104157" />
+</p>
+
+<p>
+    <code>cardId</code> musí odpovídat některému existujícímu číslu karty - viz přehled karet výše - jinak je vráceno <code>404</code>
+</p>
+
+<p>
+    Pro volání validity a state EP je nutné být přihlášen - k tomu slouží první 2 EP (login logout).
+    Pro nepřihlášené uživatele a uživatele s nižším oprávněním než "manager" vrací endpointy <code>401</code> - Unauthorized
+</p>
+
+<p>
+    EP vracejí skutečné hodnoty nastavené na přehledu karet (viz výše) - dá se otestovat změnou hodnot...
+</p>
+
+<h2>Unit testy</h2>
+
+<p>Byly vytvořeny 4 unit testy se základními scénáři.</p>
+
+<p>
+    <img src="~/images/Pasted image 20260107104915.png" alt="Pasted image 20260107104915" />
+</p>
+
+<h2>Poznámka k implementaci</h2>
+
+<p>
+    Pro práci s daty byla zvolena SQLite - aby se ušetřila práce s konfigurování DB serveru a koneckonců i práce s náhradním řešením - ukládání dat do souborů nebo natvrdo napsaných v kódu.
+    Tato db také posloužila pro "skutečnou" autorizaci a autentifikaci, která byla řešena jen na základní úrovni.
+</p>
+
+<p>
+    Celá logika by mohla být v tomto případě řešena jen mikroservisami, ale předpokládejme, že skutečné API často potřebuje složitější řešení - volání dat z více zdrojů,
+    transformaci + další logiku. Pro ukázku "jak píšu kód" jsem proto zvolil v tomto okamžiku "zbytečně složitější" řešení, které logiku vyjímá z Controlleru
+    (kde by neměla být žádná business logika) do samostatných "services".
+</p>
+
+<p>
+    Dále byla přidána třída <code>Result&lt;T&gt;</code>. Ta slouží k tomu, aby všechny případné výjimky byly zachyceny v kódu a předány v návratové hodnotě z příslušné služby
+    a kód nebyl "error driven" - což je špatný pattern a performance issue.
+</p>
+
+<p>
+    Skutečná aplikace by dále měla být doplněna o logování - zde řešeno jen výpisem do konzole.
+</p>

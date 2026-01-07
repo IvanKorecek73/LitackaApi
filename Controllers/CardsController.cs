@@ -1,9 +1,7 @@
 ﻿using LitackaApi.Auth;
-using LitackaApi.Data;
 using LitackaApi.Services.Cards;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LitackaApi.Controllers;
 

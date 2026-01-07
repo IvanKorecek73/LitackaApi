@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/App_Data/litacka-auth.sqbpro
+/App_Data/litacka-auth.db-wal
+/App_Data/litacka-auth.db-shm
